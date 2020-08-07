@@ -202,7 +202,7 @@ def attempt_update():
   git_fetch_result = len(git_fetch_output) > 0 and (git_fetch_output != err_msg)
 
   cloudlog.info("comparing %s to %s" % (cur_hash, upstream_hash))
-  if new_version or git_fetch_result:
+  if True or new_version or git_fetch_result:
     cloudlog.info("Running update")
     if new_version:
       cloudlog.info("git reset in progress")
@@ -288,6 +288,7 @@ def main():
       if params.get("IsOffroad") == b"1":
         attempt_update()
         update_failed_count = 0
+        break
       else:
         cloudlog.info("not running updater, openpilot running")
 
@@ -307,6 +308,7 @@ def main():
 
   # We've been signaled to shut down
   dismount_ovfs()
+  os.system("reboot")
 
 if __name__ == "__main__":
   main()
